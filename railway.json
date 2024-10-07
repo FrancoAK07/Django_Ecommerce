@@ -9,7 +9,8 @@
 					"nixPkgs": ["...", "nodejs"]
 				}
 			}
-		}
+		},
+		"buildCommand": "npm ci"
 	},
 	"deploy": {
 		"runtime": "V2",
