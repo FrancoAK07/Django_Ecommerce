@@ -15,7 +15,7 @@
 	"deploy": {
 		"runtime": "V2",
 		"numReplicas": 1,
-		"startCommand": "gunicorn mystore.wsgi --log-file && python manage.py migrate && gunicorn mystore.wsgi",
+		"startCommand": "python manage.py migrate && gunicorn mystore.wsgi && gunicorn mystore.wsgi --log-file",
 		"sleepApplication": false,
 		"restartPolicyType": "ON_FAILURE",
 		"restartPolicyMaxRetries": 10
