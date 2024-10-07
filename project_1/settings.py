@@ -26,10 +26,10 @@ SECRET_KEY = "django-insecure-fw!2^*#j3y+r-dt--3c8%a1nx3#sir=p6f0ue$hw3fgd2@4u%5
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "project1-production-455d.up.railway.app",
-    "https://project1-production-455d.up.railway.app",
+    "project1-production-1e81.up.railway.app",
+    "https://project1-production-1e81.up.railway.app",
 ]
-CSRF_TRUSTED_ORIGINS = ["https://project1-production-455d.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://project1-production-1e81.up.railway.app"]
 
 
 # Application definition
