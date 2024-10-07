@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div class="text-white text-center mt-4 mb-4">
+        <h1 class="text-4xl">Billing Info</h1>
+        <p class="fw-normal mb-0 text-white">Enter Payment Info...</p>
+    </div>
+
+    <div class="text-white flex flex-col text-center w-1/2 mx-auto p-4 bg-blue-950">
+        <div class="text-center">
+            <h2 class="text-2xl text-white mb-4">Order Summary</h2>
+        </div>
+        {% for product in cart_products %}
+            <div class="bg-blue-800 grid grid-cols-2 mb-4 p-2 rounded-sm">
+                <div class="mx-auto">
+                    <img class="h-28 w-36" src="{{ product.image.url }}" alt="">
+                </div>
+                <div class="m-auto">
+                    {{ product.title }}
+                        {% for price, value in prices.items %}
+                            {% if price == product.id|slugify %}
+                                <h1 class="text-white">${{value}}</h1>
+                            {% endif %}
+                        {% endfor %}
+                        Quantity:
+                        {% for key, value in quantities.items %}
+                            {% if key == product.id|slugify %}
+                                {{ value }}
+                            {% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="mb-2 font-bold text-xl">
+            Total: ${{ totals }}
+        </div>
+        <a href="{% url 'cart_summary' %}" class="bg-orange-400 mx-auto rounded-md p-2 shadow-md hover:opacity-80">Update Items</a>
+    </div>
+
+    <div class="w-1/2 mx-auto p-4 bg-blue-950 mt-4 text-white">
+        <h1 class="text-2xl text-white text-center mb-4">Shipping Info</h1>
+        <div class="grid grid-cols-2 w-2/3 mx-auto">
+            <p>Name:</p>
+            <p class="text-end">{{ shipping_info.shipping_full_name }}</p>
+            <p>Email:</p>
+            <p class="text-end">{{ shipping_info.shipping_email }}</p>
+            <p>Address 1:</p>
+            <p class="text-end">{{ shipping_info.shipping_address1 }}</p>
+            <p>Address 2:</p>
+            <p class="text-end">{{ shipping_info.shipping_address2 }}</p>
+            <p>City:</p>
+            <p class="text-end">{{ shipping_info.shipping_city }}</p>
+            <p>State:</p>
+            <p class="text-end">{{ shipping_info.shipping_state }}</p>
+            <p>Zipcode:</p>
+            <p class="text-end">{{ shipping_info.shipping_zipcode }}</p>
+            <p>Country:</p>
+            <p class="mb-4 text-end">{{ shipping_info.shipping_country }}</p>
+        </div>
+        <div class="flex justify-center">
+            <a href="{% url 'checkout' %}" class="bg-orange-400 text-center mx-auto rounded-md p-2 shadow-md hover:opacity-80">Update Shipping Info</a>
+        </div>
+    </div>
+
+    <div class="w-1/2 mx-auto p-4 bg-blue-950 mt-4 mb-4 text-white">
+        <h1 class="text-2xl text-white text-center mb-4">Billing Info</h1>
+        <div class="grid grid-cols-2 w-2/3 mx-auto">
+            <p>Card Name:</p>
+            <p class="text-end">{{ shipping_info.card_name }}</p>
+            <p>Card Number:</p>
+            <p class="text-end">{{ shipping_info.card_number }}</p>
+            <p>Expiration Date:</p>
+            <p class="text-end">{{ shipping_info.card_exp_date }}</p>
+            <p>CVV Number:</p>
+            <p class="text-end">{{ shipping_info.card_cvv_number }}</p>
+            <p>Address 1:</p>
+            <p class="text-end">{{ shipping_info.card_address1 }}</p>
+            <p>Address 2:</p>
+            <p class="text-end">{{ shipping_info.card_address2 }}</p>
+            <p>City:</p>
+            <p class="text-end">{{ shipping_info.card_city }}</p>
+            <p>State:</p>
+            <p class="text-end">{{ shipping_info.card_state }}</p>
+            <p>Zipcode:</p>
+            <p class="text-end">{{ shipping_info.card_zipcode }}</p>
+            <p>Country:</p>
+            <p class="mb-4 text-end">{{ shipping_info.card_country }}</p>
+        </div>
+        <div class="flex justify-center">
+            <a href="{% url 'checkout' %}" class="bg-orange-400 mx-auto rounded-md p-2 shadow-md hover:opacity-80">Update Billing Info</a>
+        </div>
+    </div>
+
+    <div class="text-white flex justify-center">
+        <a href="{% url 'process_order' %}" class="bg-orange-400 rounded-md p-2 shadow-md hover:opacity-80">Pay Now</a>
+    </div>
+{% endblock content %}

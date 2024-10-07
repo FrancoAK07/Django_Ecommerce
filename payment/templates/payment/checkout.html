@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div class="text-white text-center mt-4 mb-4">
+        <h1 class="text-4xl">Checkout</h1>
+        <p class="fw-normal mb-0 text-white">Review Your Order...</p>
+    </div>
+
+
+    <div class="text-white flex flex-col text-center w-1/2 mx-auto p-4 bg-blue-950">
+        <div class="text-center">
+            <h2 class="text-2xl text-white mb-4">Order Summary</h2>
+        </div>
+        {% for product in cart_products %}
+            <div class="bg-blue-800 grid grid-cols-2 mb-4 p-2 rounded-sm">
+                <div class="mx-auto">
+                    <img class="h-28 w-36" src="{{ product.image.url }}" alt="">
+                </div>
+                <div class="m-auto">
+                    {{ product.title }}
+                        {% for price, value in prices.items %}
+                            {% if price == product.id|slugify %}
+                                <h1 class="text-white">${{value}}</h1>
+                            {% endif %}
+                        {% endfor %}
+                        Quantity:
+                        {% for key, value in quantities.items %}
+                            {% if key == product.id|slugify %}
+                                {{ value }}
+                            {% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="mb-2 font-bold text-xl">
+            Total: ${{ totals }}
+        </div>
+        <a href="{% url 'cart_summary' %}" class="bg-orange-400 mx-auto rounded-md p-2 shadow-md hover:opacity-80">Update Items</a>
+    </div>
+
+    <form class="m-0" method="POST" action="{% url 'billing_info' %}">
+        {% csrf_token %}
+        <div class="bg-blue-950 w-1/2 mx-auto text-center p-4 mt-5 mb-5">
+            <h1 class="text-2xl text-white text-center mb-4">Shipping Info</h1>
+            {% for field in shipping_form %}
+                <div class="flex mb-2 text-start">
+                    <label class="text-nowrap text-white me-1 w-32">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="bg-blue-950 w-1/2 mx-auto text-center p-4 mb-3">
+            <h1 class="text-2xl text-white mb-4 mt-8">Billing Info</h1>
+            {% for field in billing_form %}
+                <div class="flex mb-2 text-start">
+                    <label class="text-nowrap text-white me-1 w-36">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="flex justify-center mt-4">
+            <button type="submit" class="bg-orange-400 rounded-md p-2 shadow-md hover:opacity-80 text-white">
+                Continue to order summary
+            </button>
+        </div>
+    </form>
+
+{% endblock content %}

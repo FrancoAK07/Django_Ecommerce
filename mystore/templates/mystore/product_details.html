@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="flex flex-col bg-blue-700 rounded py-2 w-1/4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <h1 class="text-white text-center text-xl pb-2">{{ product.title }}</h1>
+    <img class="h-80 w-full" src="{{ product.image.url }}" alt="" />
+    <div class="text-white p-1">{{ product.description }}</div>
+    <div class="flex justify-center p-2">
+      <span class="text-white me-2">Quantity:</span>
+      <select class="text-gray-800" name="" id="quantity">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <button type="button" class="bg-yellow-400 rounded-md p-2 shadow-md hover:opacity-80 mx-auto" value="{{ product.id }}" id="add-btn">Add To Cart</button>
+  </div>
+
+  <script>
+    $(document).on('click', '#add-btn', function (e) {
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'cart_add' %}",
+        data: {
+          //product_id: $("#add-btn").val(),
+          product_id: '{{product.id}}', //same as the line above
+          product_qty: $('#quantity option:selected').text(),
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          action: 'post'
+        },
+        success: function (json) {
+          console.log(json.qty)
+          document.getElementById('cart_qty').textContent = json.qty
+          location.reload()
+        }
+      })
+      e.preventDefault()
+    })
+  </script>
+{% endblock %}

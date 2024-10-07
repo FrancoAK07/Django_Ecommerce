@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="Header">
+    <h1 class="text-3xl text-white text-center mt-8 mb-4">Login</h1>
+  </div>
+  <form class="bg-slate-700 w-1/4 m-auto rounded-md p-2" method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="flex justify-center p-1">
+      <input class="ps-1" type="text" placeholder="Enter Username" name="username" />
+    </div>
+    <div class="flex justify-center p-1">
+      <input class="ps-1" type="password" placeholder="Enter Password" name="password" />
+    </div>
+    <button type="submit" class="bg-blue-700 text-white block mx-auto p-1 rounded-sm my-2">Login</button>
+  </form>
+{% endblock %}

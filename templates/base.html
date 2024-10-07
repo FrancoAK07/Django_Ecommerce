@@ -1,0 +1,93 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Store</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+  </head>
+  <body class="bg-neutral-900 min-h-dvh pb-4">
+    <nav class="w-full h-12 bg-zinc-800 grid grid-cols-2">
+      <div class="flex ms-2">
+        <div class="align-middle flex justify-center p-2">
+          <a class="text-white my-auto hover:opacity-80 h-auto text-nowrap" href="/">🏠Home</a>
+        </div>
+        {% if not user.is_authenticated %}
+          <div class="align-middle flex justify-center p-2">
+            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'login' %}">🔑Login</a>
+          </div>
+          <div class="align-middle flex justify-center p-2">
+            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'register' %}">🖊Register</a>
+          </div>
+        {% else %}
+          <div class="align-middle flex justify-center p-2">
+            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_user' %}">📰Profile</a>
+          </div>
+          <div class="align-middle flex justify-center p-2">
+            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_info' %}">📘User Info</a>
+          </div>
+          <div class="align-middle flex justify-center p-2">
+            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'logout' %}">🚪Logout</a>
+          </div>
+          {% if user.is_superuser %}
+            <div class="ps-2 py-2 pe-4 justify-center align-middle flex">
+              <select id="dropdown" class="my-auto bg-blue-800 rounded border-none hover:opacity-80">
+                <option value="">Choose Items</option>
+                <option value="{% url 'shipped_dash' %}">Shipped Items</option>
+                <option value="{% url 'not_shipped_dash' %}">Not Shipped Items</option>
+              </select>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="flex my-auto">
+        <form class="flex my-auto" method="POST" action="{% url 'search' %}">
+          <select class="bg-blue-800 rounded-s-sm text-white text-center p-1" name="filter" id="filter">
+            <option value="" disabled selected>Filter By</option>
+            <option value="all departments">All Departments</option>
+            <option value="home">Home</option>
+            <option value="electronics">Electronics</option>
+            <option value="self care">Self Care</option>
+          </select>
+          {% csrf_token %}
+          <input class="ps-2 focus:outline-none" placeholder="Search Product" type="text" name="searched" />
+          <button type="submit" class="bg-blue-800 rounded-e-sm px-1" id="test">🔎</button>
+        </form>
+        <a href="{% url 'cart_summary' %}" class="flex my-auto ms-auto me-3 text-white bg-yellow-400 rounded-sm hover:opacity-85 p-1">
+          <div class="text-nowrap">🛒Cart</div>
+          <div class="ms-1 bg-slate-900 rounded-full flex content-center justify-center flex-wrap px-2" id="cart_qty">{{ shoppingcart|length }}</div>
+        </a>
+      </div>
+    </nav>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="text-white" role="alert">
+          <h1 class="bg-blue-600 p-2">{{ message }}</h1>
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}
+
+    {% endblock %}
+
+    <script>
+      const dropdown = document.getElementById('dropdown')
+      const filter = document.getElementById('filter')
+      if (dropdown) {
+        dropdown.addEventListener('change', function () {
+          const selectedValue = this.value
+          if (selectedValue) {
+            window.location.href = selectedValue
+          }
+        })
+      }
+      
+      filter.addEventListener('change', function () {
+        if (filter.value) {
+          window.location.href = `/search/?filterValue=${filter.value}`
+        }
+      })
+    </script>
+  </body>
+</html>
