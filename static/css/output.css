@@ -628,6 +628,18 @@ video {
   top: 1.75rem;
 }
 
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+
 .m-0 {
   margin: 0px;
 }
@@ -705,6 +717,10 @@ video {
   margin-inline-start: auto;
 }
 
+.mt-16 {
+  margin-top: 4rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -723,6 +739,18 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
+}
+
+.ms-4 {
+  margin-inline-start: 1rem;
+}
+
+.ms-8 {
+  margin-inline-start: 2rem;
+}
+
+.ms-5 {
+  margin-inline-start: 1.25rem;
 }
 
 .block {
@@ -785,6 +813,14 @@ video {
   height: 100%;
 }
 
+.h-60 {
+  height: 15rem;
+}
+
+.h-20 {
+  height: 5rem;
+}
+
 .min-h-dvh {
   min-height: 100dvh;
 }
@@ -837,6 +873,38 @@ video {
   width: 100%;
 }
 
+.w-2\/12 {
+  width: 16.666667%;
+}
+
+.w-4\/12 {
+  width: 33.333333%;
+}
+
+.w-6\/12 {
+  width: 50%;
+}
+
+.w-5\/12 {
+  width: 41.666667%;
+}
+
+.w-1\/12 {
+  width: 8.333333%;
+}
+
+.w-7\/12 {
+  width: 58.333333%;
+}
+
+.w-3\/12 {
+  width: 25%;
+}
+
+.w-8\/12 {
+  width: 66.666667%;
+}
+
 .table-auto {
   table-layout: auto;
 }
@@ -865,6 +933,18 @@ video {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .grid-rows-1 {
@@ -897,6 +977,10 @@ video {
 
 .gap-y-5 {
   row-gap: 1.25rem;
+}
+
+.gap-y-7 {
+  row-gap: 1.75rem;
 }
 
 .text-nowrap {
@@ -1139,6 +1223,11 @@ video {
   padding-bottom: 1.25rem;
 }
 
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -1157,6 +1246,10 @@ video {
 
 .ps-2 {
   padding-inline-start: 0.5rem;
+}
+
+.ps-5 {
+  padding-inline-start: 1.25rem;
 }
 
 .text-center {
@@ -1244,6 +1337,10 @@ video {
 
 .hover\:opacity-85:hover {
   opacity: 0.85;
+}
+
+.hover\:opacity-90:hover {
+  opacity: 0.9;
 }
 
 .focus\:outline-none:focus {

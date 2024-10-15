@@ -8,8 +8,8 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
   </head>
   <body class="bg-neutral-900 min-h-dvh pb-4">
-    <nav class="w-full h-12 bg-zinc-800 grid grid-cols-2">
-      <div class="flex ms-2">
+    <nav class="w-full h-12 bg-zinc-800 flex">
+      <div class="flex ps-2 my-auto col-span-3">
         <div class="align-middle flex justify-center p-2">
           <a class="text-white my-auto hover:opacity-80 h-auto text-nowrap" href="/">🏠Home</a>
         </div>
@@ -41,9 +41,9 @@
           {% endif %}
         {% endif %}
       </div>
-      <div class="flex my-auto">
-        <form class="flex my-auto" method="POST" action="{% url 'search' %}">
-          <select class="bg-blue-800 rounded-s-sm text-white text-center p-1" name="filter" id="filter">
+      <div class="flex my-auto w-6/12 px-5">
+        <form class="flex my-auto w-full" method="POST" action="{% url 'search' %}">
+          <select class="bg-blue-800 rounded-s-sm text-white text-center p-1 w-3/12" name="filter" id="filter">
             <option value="" disabled selected>Filter By</option>
             <option value="all departments">All Departments</option>
             <option value="home">Home</option>
@@ -51,9 +51,11 @@
             <option value="self care">Self Care</option>
           </select>
           {% csrf_token %}
-          <input class="ps-2 focus:outline-none" placeholder="Search Product" type="text" name="searched" />
-          <button type="submit" class="bg-blue-800 rounded-e-sm px-1" id="test">🔎</button>
+          <input class="ps-2 focus:outline-none w-8/12" placeholder="Search Product" type="text" name="searched" />
+          <button type="submit" class="bg-blue-800 rounded-e-sm px-1 w-1/12" id="test">🔎</button>
         </form>
+      </div>
+      <div class="flex my-auto ms-auto">
         <a href="{% url 'cart_summary' %}" class="flex my-auto ms-auto me-3 text-white bg-yellow-400 rounded-sm hover:opacity-85 p-1">
           <div class="text-nowrap">🛒Cart</div>
           <div class="ms-1 bg-slate-900 rounded-full flex content-center justify-center flex-wrap px-2" id="cart_qty">{{ shoppingcart|length }}</div>
