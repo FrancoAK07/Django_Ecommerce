@@ -7,21 +7,21 @@
     <div class="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent from-60% to-neutral-900 to-90%"></div>
     <h1 class="text-3xl text-white text-center absolute inset-0">Departments</h1>
     <div class="absolute grid grid-cols-3 gap-3 w-full px-10 top-7">
-      <div class="relative p-6 rounded-sm hover:cursor-pointer" id="home">
+      <div class="relative p-6 rounded-sm hover:cursor-pointer hover:scale-110 transition ease-in-out delay-100" id="home">
         <img class="rounded-sm h-56 w-full" src="{% static 'images/home.webp' %}" alt="" />
         <div class="absolute top-5 start-0 end-0 text-center text-white py-2 px-4">
           <div class="text-xl mb-3">Home</div>
           <div>Find whatever you need for your home!</div>
         </div>
       </div>
-      <div class="relative p-6 rounded-sm hover:cursor-pointer" href="{% url 'search' %}" id="electronics">
+      <div class="relative p-6 rounded-sm hover:cursor-pointer hover:scale-110 transition ease-in-out delay-100" href="{% url 'search' %}" id="electronics">
         <img class="rounded-sm h-56 w-full" src="{% static 'images/electronics.webp' %}" alt="" />
         <div class="absolute top-5 start-0 end-0 text-center text-white py-2 px-4">
           <div class="text-xl mb-3">Electronics</div>
           <div>The latest products for entertainment or productivity!</div>
         </div>
       </div>
-      <div class="relative p-6 rounded-sm hover:cursor-pointer" href="{% url 'search' %}" id="self care">
+      <div class="relative p-6 rounded-sm hover:cursor-pointer hover:scale-110 transition ease-in-out delay-100" href="{% url 'search' %}" id="self care">
         <img class="rounded-sm h-56 w-full" src="{% static 'images/self_care.jpg' %}" alt="" />
         <div class="absolute top-5 start-0 end-0 text-center text-white py-2 px-4">
           <div class="text-xl mb-3">Self Care</div>
