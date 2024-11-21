@@ -1,23 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mx-auto text-white">
+  <div class="text-white">
     <h1 class="text-3xl text-center mt-4">Shopping Cart</h1>
     {% if cart_products %}
-      <div class="grid grid-rows-1 w-5/6 md:w-10/12 bg-slate-700 rounded-md mx-auto my-6 p-4">
-        <div class="grid grid-cols-3 pb-2 text-center">
+      <div class="grid grid-rows-1 w-5/6 md:w-1/2 bg-slate-700 rounded-md mx-auto my-6 p-4">
+        <div class="grid grid-cols-2 pb-2 text-center">
           <h1 class="text-xl">Items</h1>
-          <div></div>
           <h3 class="text-xl">Price</h3>
         </div>
         {% for product in cart_products %}
-          <div class="grid grid-cols-3 rounded-sm text-center text-white mb-3 border-y border-gray-300 p-3">
-            <div class="col flex justify-center">
-              <img class="h-44 w-44" src="{{ product.image.url }}" alt="" />
-            </div>
+          <div class="grid grid-cols-2 rounded-sm text-center text-white mb-3 border-y border-gray-300 p-3">
             <div class="col content-center">
+              <img class="h-32 w-36 md:h-44 md:w-44 mx-auto" src="{{ product.image.url }}" alt="" />
               <h1 class="text-lg">{{ product.title }}</h1>
-              <h1>{{ product.description }}</h1>
               <div class="flex justify-center">
                 <span class="me-2 text-white">Quantity:</span>
                 <select class="text-gray-800" id="select{{ product.id }}">
@@ -33,8 +29,10 @@
                   <option value="5">5</option>
                 </select>
               </div>
-              <button class="rounded bg-blue-500 update-btn p-1 mt-2 hover:opacity-80" type="button" data-index="{{ product.id }}">Update</button>
-              <button class="rounded bg-red-500 delete-btn p-1 mt-2 hover:opacity-80" type="button" data-index="{{ product.id }}">Remove</button>
+              <div class="w-full flex justify-between md:justify-center">
+                <button class="rounded bg-blue-500 update-btn p-1 mt-2 me-2 hover:opacity-80" type="button" data-index="{{ product.id }}">Update</button>
+                <button class="rounded bg-red-500 delete-btn p-1 mt-2 hover:opacity-80" type="button" data-index="{{ product.id }}">Remove</button>
+              </div>
             </div>
             <div class="price content-center">
               {% for price, value in prices.items %}
@@ -45,14 +43,10 @@
             </div>
           </div>
         {% endfor %}
-        <div class="grid grid-cols-3">
-          <div></div>
-          <div></div>
-          <div class="text-center">
-            <div class="text-xl ms-auto">Sub-Total</div>
-            <div class="ms-auto mb-2">${{ totals }}</div>
-            <a class="rounded bg-green-500 p-1 mt-2 hover:opacity-80 text-white" href="{% url 'checkout' %}">Checkout</a>
-          </div>
+        <div class="grid grid-cols-1 text-center">
+          <div class="text-xl">Sub-Total</div>
+          <div class="mb-4">${{ totals }}</div>
+          <a class="mx-auto rounded bg-green-500 p-2 hover:opacity-80 text-white" href="{% url 'checkout' %}">Checkout</a>
         </div>
       </div>
     {% else %}

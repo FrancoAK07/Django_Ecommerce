@@ -1,13 +1,19 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-  <div class="Header">
-    <h1 class="text-3xl text-white text-center mt-8 mb-4">Register</h1>
+  <div class="relative h-96">
+    <img class="w-full h-full" src="{% static 'images/onlineShopping.jpg' %}" alt="" />
+    <div class="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent from-60% to-neutral-900 to-90%"></div>
+    <div class="absolute w-full px-10 top-7">
+      <div class="Header">
+        <h1 class="text-3xl text-white text-center mt-8 mb-4">Register</h1>
+      </div>
+      <form class="bg-slate-700 w-5/6 md:w-1/3 m-auto rounded-md p-4" method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-700 text-white block mx-auto p-2 rounded-sm my-2">Register</button>
+      </form>
+    </div>
   </div>
-  <form class="bg-slate-700 w-1/3 m-auto rounded-md p-2" method="POST" action="{% url 'register' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="bg-blue-700 text-white block mx-auto p-1 rounded-sm my-2">Register</button>
-  </form>
-{% endblock content %}
+{% endblock %}

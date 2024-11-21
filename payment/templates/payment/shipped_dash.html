@@ -1,41 +1,41 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
   <div class="Header">
     <h1 class="text-3xl text-white text-center mt-8 mb-4">Shipped Items</h1>
   </div>
-
-  <table class="table-auto text-white border border-collapse border-green-500 mx-auto mt-8">
-    <thead>
-      <tr class="bg-emerald-300">
-        <th class="p-1">Id</th>
-        <th class="p-1">Amount Paid</th>
-        <th class="p-1">Email</th>
-        <th class="p-1">Date Ordered</th>
-        <th class="p-1">Date Shipped</th>
-        <th class="p-1">Shipped</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in orders %}
-      <tr class="text-white text-center border border-blue-300">
-        <td class="border border-blue-300"><a class="hover:opacity-85 text-blue-300" href="{% url 'orders' item.id %}">{{ item.id }}</a></td>
-        <td class="border border-blue-300">${{ item.amount_paid }}</td>
-        <td class="border border-blue-300">{{ item.email }}</td>
-        <td class="border border-blue-300">{{ item.date_ordered }}</td>
-        <td class="border border-blue-300">{{ item.date_shipped }}</td>
-        <td class="border border-blue-300">
-          <form class="p-3 flex m-0" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="shipping_status" value="false">
-            <input type="hidden" name="num" value={{item.id}}>
-            <button type="Submit" class="flex content-center text-white bg-red-400 p-1 rounded-sm hover:opacity-85">Mark as not shipped</button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-{% endblock content %}
+  <div class="w-5/6 md:w-1/2 mx-auto">
+    <table class="table-auto text-white border border-collapse border-green-500 mt-8 mx-auto">
+      <thead>
+        <tr class="bg-emerald-300">
+          <th class="p-1">Id</th>
+          <th class="p-1">Amount Paid</th>
+          <th class="p-1">Date Ordered</th>
+          <th class="p-1">Date Shipped</th>
+          <th class="p-1">Shipped</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in orders %}
+          <tr class="text-white text-center border border-blue-300">
+            <td class="border border-blue-300">
+              <a class="hover:opacity-85 text-blue-300" href="{% url 'orders' item.id %}">{{ item.id }}</a>
+            </td>
+            <td class="border border-blue-300">${{ item.amount_paid }}</td>
+            <td class="border border-blue-300">{{ item.date_ordered }}</td>
+            <td class="border border-blue-300">{{ item.date_shipped }}</td>
+            <td class="border border-blue-300">
+              <form class="p-2 flex m-0" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="shipping_status" value="false" />
+                <input type="hidden" name="num" value="{{ item.id }}" />
+                <button type="Submit" class="flex content-center text-white bg-red-400 p-1 rounded-sm hover:opacity-85">Mark as not shipped</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

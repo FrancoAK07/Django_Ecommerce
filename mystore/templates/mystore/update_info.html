@@ -1,30 +1,35 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-  <h1 class="text-3xl text-white text-center mt-8 mb-4">Update info</h1>
-  <form class="" method="POST" action="{% url 'update_info' %}">
-
-    <div class="bg-slate-700 w-1/3 mx-auto rounded-md p-4 mb-4">
-      <h4 class="text-center text-white text-3xl mb-3">Billing Information</h4>
-      {% csrf_token %}
-      {% for field in form %}
-          <div class="flex mb-2">
+  <div class="h-1/2 relative">
+    <img class="w-full h-full" src="{% static 'images/onlineShopping.jpg' %}" alt="" />
+    <div class="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent from-60% to-neutral-900 to-90%"></div>
+    <div class="absolute top-0 w-3/4 md:w-1/2 mx-auto left-0 right-0">
+      <h1 class="text-3xl text-white text-center mt-8 mb-4">Update info</h1>
+      <form class="" method="POST" action="{% url 'update_info' %}">
+        <div class="bg-slate-700 mx-auto rounded-md p-4 mb-4">
+          <h4 class="text-center text-white text-3xl mb-3">Billing Information</h4>
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="flex mb-2">
               <label class="text-nowrap text-white me-1 w-36 ms-2">{{ field.label }}</label>
               {{ field }}
-          </div>
-      {% endfor %}
-    </div>
+            </div>
+          {% endfor %}
+        </div>
 
-    <div class="bg-slate-700 w-1/3 mx-auto rounded-md p-4 mb-4">
-      <h4 class="text-center text-white text-3xl mb-3">Shipping Information</h4>
-      {% for field in shipping_form %}
-          <div class="flex mb-2">
+        <div class="bg-slate-700 mx-auto rounded-md p-4 mb-4">
+          <h4 class="text-center text-white text-3xl mb-3">Shipping Information</h4>
+          {% for field in shipping_form %}
+            <div class="flex mb-2">
               <label class="text-nowrap text-white me-1 w-36 ms-2">{{ field.label }}</label>
               {{ field }}
-          </div>
-      {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+        <button type="submit" class="bg-blue-700 rounded-md p-2 shadow-md hover:opacity-80 text-white block mx-auto">Update</button>
+      </form>
     </div>
-    <button type="submit" class="bg-blue-700 rounded-md p-2 shadow-md hover:opacity-80 text-white block mx-auto">Update</button>
-  </form>
-{% endblock content %}
+  </div>
+{% endblock %}

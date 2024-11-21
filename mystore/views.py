@@ -5,7 +5,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
+from .forms import (
+    SignUpForm,
+    UpdateUserForm,
+    ChangePasswordForm,
+    UserInfoForm,
+    LoginForm,
+)
 from django.db.models import Q
 import json
 from shoppingcart.shoppingcart import ShoppingCart
@@ -25,27 +31,33 @@ def product_details(request, slug):
 
 
 def login_user(request):
+    form = LoginForm()
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            current_user = Profile.objects.get(user__id=request.user.id)
-            saved_cart = current_user.old_cart
-            if saved_cart:
-                converted_cart = json.loads(saved_cart)
-                cart = ShoppingCart(request)
-                for key, value in converted_cart.items():
-                    cart.db_add(product=key, quantity=value)
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                current_user = Profile.objects.get(user__id=request.user.id)
+                saved_cart = current_user.old_cart
+                if saved_cart:
+                    converted_cart = json.loads(saved_cart)
+                    cart = ShoppingCart(request)
+                    for key, value in converted_cart.items():
+                        cart.db_add(product=key, quantity=value)
 
-            messages.success(request, ("logged in successfully!"))
-            return redirect("home")
+                messages.success(request, ("logged in successfully!"))
+                return redirect("home")
+            else:
+                messages.success(request, ("username or password incorrect"))
+                return redirect("login")
         else:
             messages.success(request, ("username or password incorrect"))
             return redirect("login")
     else:
-        return render(request, "mystore/login.html", {})
+        return render(request, "mystore/login.html", {"form": form})
 
 
 def logout_user(request):
@@ -137,16 +149,19 @@ def search_product(request):
     print(filter_value)
     if request.method == "POST":
         searched = request.POST["searched"]
-        # query the products model
-        searched = Product.objects.filter(
-            Q(title__icontains=searched) | Q(description__icontains=searched)
-        )
-        if not searched:
+        if searched != "":
+            # query the products model
+            searched = Product.objects.filter(
+                Q(title__icontains=searched) | Q(description__icontains=searched)
+            )
+            if not searched:
+                messages.success(request, ("No products found"))
+                return render(request, "mystore/search.html", {})
+            else:
+                return render(request, "mystore/search.html", {"searched": searched})
+        else:
             messages.success(request, ("No products found"))
             return render(request, "mystore/search.html", {})
-        else:
-            print("searched item", searched)
-            return render(request, "mystore/search.html", {"searched": searched})
     else:
         if filter_value == "all departments":
             print("filter:", filter_value)

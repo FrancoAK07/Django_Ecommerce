@@ -6,61 +6,134 @@
     <title>My Store</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" />
     <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
     <script src="{% static 'js/jquery.min.js' %}"></script>
   </head>
-  <body class="bg-neutral-900 min-h-dvh pb-4">
-    <nav class="w-full h-12 bg-zinc-800 flex">
-      <div class="flex ps-2 my-auto col-span-3">
-        <div class="align-middle flex justify-center p-2">
-          <a class="text-white my-auto hover:opacity-80 h-auto text-nowrap" href="/">🏠Home</a>
-        </div>
-        {% if not user.is_authenticated %}
+  <body class="bg-neutral-900 pb-4 min-h-dvh">
+    <nav class="w-full h-12 bg-zinc-800 flex relative">
+      <div class="desktop-nav hidden md:flex w-full">
+        <div class="flex ps-2 my-auto col-span-3">
           <div class="align-middle flex justify-center p-2">
-            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'login' %}">🔑Login</a>
+            <a class="text-white my-auto hover:opacity-80 h-auto text-nowrap" href="/">🏠Home</a>
           </div>
-          <div class="align-middle flex justify-center p-2">
-            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'register' %}">🖊Register</a>
-          </div>
-        {% else %}
-          <div class="align-middle flex justify-center p-2">
-            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_user' %}">📰Profile</a>
-          </div>
-          <div class="align-middle flex justify-center p-2">
-            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_info' %}">📘User Info</a>
-          </div>
-          <div class="align-middle flex justify-center p-2">
-            <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'logout' %}">🚪Logout</a>
-          </div>
-          {% if user.is_superuser %}
-            <div class="ps-2 py-2 pe-4 justify-center align-middle flex">
-              <select id="dropdown" class="my-auto bg-blue-800 rounded border-none hover:opacity-80">
-                <option value="">Choose Items</option>
-                <option value="{% url 'shipped_dash' %}">Shipped Items</option>
-                <option value="{% url 'not_shipped_dash' %}">Not Shipped Items</option>
-              </select>
+          {% if not user.is_authenticated %}
+            <div class="align-middle flex justify-center p-2">
+              <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'login' %}">🔑Login</a>
             </div>
+            <div class="align-middle flex justify-center p-2">
+              <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'register' %}">🖊Register</a>
+            </div>
+          {% else %}
+            <div class="align-middle flex justify-center p-2">
+              <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_user' %}">📰Profile</a>
+            </div>
+            <div class="align-middle flex justify-center p-2">
+              <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_info' %}">📘User Info</a>
+            </div>
+            <div class="align-middle flex justify-center p-2">
+              <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'logout' %}">🚪Logout</a>
+            </div>
+            {% if user.is_superuser %}
+              <div class="ps-2 py-2 pe-4 justify-center align-middle flex">
+                <select id="dropdown" class="my-auto bg-blue-800 rounded border-none hover:opacity-80">
+                  <option value="">Choose Items</option>
+                  <option value="{% url 'shipped_dash' %}">Shipped Items</option>
+                  <option value="{% url 'not_shipped_dash' %}">Not Shipped Items</option>
+                </select>
+              </div>
+            {% endif %}
           {% endif %}
-        {% endif %}
+        </div>
+        <div class="flex my-auto w-6/12 px-5">
+          <form class="flex my-auto w-full" method="POST" action="{% url 'search' %}">
+            <select class="bg-blue-800 rounded-s-sm text-white text-center p-1 w-3/12" name="filter" id="filter">
+              <option value="" disabled selected>Filter By</option>
+              <option value="all departments">All Departments</option>
+              <option value="home">Home</option>
+              <option value="electronics">Electronics</option>
+              <option value="self care">Self Care</option>
+            </select>
+            {% csrf_token %}
+            <input class="ps-2 focus:outline-none w-8/12" placeholder="Search Product" type="text" name="searched" />
+            <button type="submit" class="bg-blue-800 rounded-e-sm px-1 w-1/12" id="test">🔎</button>
+          </form>
+        </div>
+        <div class="flex my-auto ms-auto">
+          <a href="{% url 'cart_summary' %}" class="flex my-auto ms-auto me-3 text-white bg-yellow-400 rounded-sm hover:opacity-85 p-1">
+            <div class="text-nowrap">🛒Cart</div>
+            <div class="ms-1 bg-slate-900 rounded-full flex content-center justify-center flex-wrap px-2" id="cart_qty">{{ shoppingcart|length }}</div>
+          </a>
+        </div>
       </div>
-      <div class="flex my-auto w-6/12 px-5">
-        <form class="flex my-auto w-full" method="POST" action="{% url 'search' %}">
-          <select class="bg-blue-800 rounded-s-sm text-white text-center p-1 w-3/12" name="filter" id="filter">
-            <option value="" disabled selected>Filter By</option>
-            <option value="all departments">All Departments</option>
-            <option value="home">Home</option>
-            <option value="electronics">Electronics</option>
-            <option value="self care">Self Care</option>
-          </select>
-          {% csrf_token %}
-          <input class="ps-2 focus:outline-none w-8/12" placeholder="Search Product" type="text" name="searched" />
-          <button type="submit" class="bg-blue-800 rounded-e-sm px-1 w-1/12" id="test">🔎</button>
-        </form>
-      </div>
-      <div class="flex my-auto ms-auto">
-        <a href="{% url 'cart_summary' %}" class="flex my-auto ms-auto me-3 text-white bg-yellow-400 rounded-sm hover:opacity-85 p-1">
-          <div class="text-nowrap">🛒Cart</div>
-          <div class="ms-1 bg-slate-900 rounded-full flex content-center justify-center flex-wrap px-2" id="cart_qty">{{ shoppingcart|length }}</div>
-        </a>
+      <div class="mobile-nav grid grid-cols-3 justify-center w-full h-full relative md:hidden">
+        <div class="flex justify-center align-middle ms-3 me-auto">
+          <button type="submit" class="bg-blue-800 p-1 my-auto rounded-sm" id="mobile-search">🔎</button>
+        </div>
+        <div class="flex justify-center align-middle">
+          <button class="h-full" id="hamburger-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+        </div>
+        <div class="flex my-auto ms-auto">
+          <a href="{% url 'cart_summary' %}" class="flex my-auto ms-auto me-3 text-white bg-yellow-400 rounded-sm hover:opacity-85 p-1">
+            <div class="text-nowrap">🛒Cart</div>
+            <div class="ms-1 bg-slate-900 rounded-full flex content-center justify-center flex-wrap px-2" id="cart_qty">{{ shoppingcart|length }}</div>
+          </a>
+        </div>
+
+        <div class="hidden absolute top-full z-10 mx-auto left-0 right-0 p-2 bg-blue-800" id="mobile-search-input">
+          <div class="flex">
+            <form class="flex my-auto w-full" method="POST" action="{% url 'search' %}">
+              <select class="bg-blue-800 rounded-s-sm text-white text-center p-1 w-3/12" name="mobile-filter" id="mobile-filter">
+                <option value="" disabled selected>Filter By</option>
+                <option value="all departments">All Departments</option>
+                <option value="home">Home</option>
+                <option value="electronics">Electronics</option>
+                <option value="self care">Self Care</option>
+              </select>
+              {% csrf_token %}
+              <input class="ps-2 focus:outline-none w-8/12" placeholder="Search Product" type="text" name="searched" />
+              <button type="submit" class="bg-blue-800 rounded-e-sm px-1 w-1/12" id="test">🔎</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="hidden absolute top-full z-50 mx-auto left-0 right-0 w-1/3 p-2 bg-zinc-800 border-t-2 border-gray-400" id="mobile-menu">
+          <div class="h-full w-full">
+            <div class="align-middle flex justify-center p-2 hover:bg-zinc-600">
+              <a class="text-white my-auto h-auto text-nowrap" href="/">🏠Home</a>
+            </div>
+            {% if not user.is_authenticated %}
+              <div class="align-middle flex justify-center p-2 hover:bg-zinc-600">
+                <a class="text-white my-auto text-nowrap" href="{% url 'login' %}">🔑Login</a>
+              </div>
+              <div class="align-middle flex justify-center p-2 hover:bg-zinc-600">
+                <a class="text-white my-auto text-nowrap" href="{% url 'register' %}">🖊Register</a>
+              </div>
+            {% else %}
+              <div class="align-middle flex justify-center p-2 hover:bg-zinc-600">
+                <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_user' %}">📰Profile</a>
+              </div>
+              <div class="align-middle flex justify-center p-2 hover:bg-zinc-600">
+                <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'update_info' %}">📘User Info</a>
+              </div>
+              <div class="align-middle flex justify-center p-2 hover:bg-zinc-600">
+                <a class="text-white my-auto hover:opacity-80 text-nowrap" href="{% url 'logout' %}">🚪Logout</a>
+              </div>
+              {% if user.is_superuser %}
+                <div class="justify-center align-middle flex p-2 w-full">
+                  <select id="dropdownMobile" class="my-auto bg-blue-800 rounded border-none hover:opacity-80 w-full">
+                    <option value="">Choose Items</option>
+                    <option value="{% url 'shipped_dash' %}">Shipped Items</option>
+                    <option value="{% url 'not_shipped_dash' %}">Not Shipped Items</option>
+                  </select>
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
       </div>
     </nav>
     {% if messages %}
@@ -76,7 +149,14 @@
 
     <script>
       const dropdown = document.getElementById('dropdown')
+      const dropdownMobile = document.getElementById('dropdownMobile')
       const filter = document.getElementById('filter')
+      const mobileFilter = document.getElementById('mobile-filter')
+      const hamburgerBtn = document.getElementById('hamburger-button')
+      const mobileMenu = document.getElementById('mobile-menu')
+      const mobileSearch = document.getElementById('mobile-search')
+      const mobileSearchInput = document.getElementById('mobile-search-input')
+      
       if (dropdown) {
         dropdown.addEventListener('change', function () {
           const selectedValue = this.value
@@ -85,10 +165,61 @@
           }
         })
       }
+      if (dropdownMobile) {
+        dropdownMobile.addEventListener('change', function () {
+          console.log('dropdownMobile')
+          const selectedValue = this.value
+          if (selectedValue) {
+            window.location.href = selectedValue
+          }
+        })
+      }
+      
+      window.addEventListener('click', function (e) {
+        console.log(e.target)
+        if (!hamburgerBtn.contains(e.target) && e.target != hamburgerBtn && !mobileMenu.contains(e.target) && e.target != mobileMenu) {
+          console.log('entered if')
+          mobileMenu.classList.add('hidden')
+        }
+      
+        if (mobileMenu.classList.value.includes('hidden')) {
+          hamburgerBtn.classList.remove('hamburgerActive')
+        } else {
+          hamburgerBtn.classList.add('hamburgerActive')
+        }
+      
+        if (!mobileSearchInput.contains(e.target) && mobileSearch != e.target && !mobileSearchInput.classList.value.includes('hidden')) {
+          mobileSearchInput.classList.add('hidden')
+        }
+      })
       
       filter.addEventListener('change', function () {
         if (filter.value) {
           window.location.href = `/search/?filterValue=${filter.value}`
+        }
+      })
+      
+      mobileFilter.addEventListener('change', function () {
+        if (mobileFilter.value) {
+          window.location.href = `/search/?filterValue=${mobileFilter.value}`
+        }
+      })
+      
+      hamburgerBtn.addEventListener('click', function () {
+        if (mobileMenu.classList.value.includes('hidden')) {
+          mobileMenu.classList.remove('hidden')
+          hamburgerBtn.classList.toggle('hamburgerActive')
+        } else {
+          hamburgerBtn.classList.toggle('hamburgerActive')
+          mobileMenu.classList.add('hidden')
+        }
+      })
+      
+      mobileSearch.addEventListener('click', function () {
+        if (mobileSearchInput.classList.value.includes('hidden')) {
+          mobileSearchInput.classList.remove('hidden')
+        } else {
+          mobileSearchInput.classList.add('hidden')
         }
       })
     </script>
