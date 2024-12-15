@@ -31,7 +31,10 @@ ALLOWED_HOSTS = [
     "https://django-ecommerce-d0ka.onrender.com",
     "127.0.0.1",
 ]
-CSRF_TRUSTED_ORIGINS = ["https://project1-production-1e81.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://project1-production-1e81.up.railway.app",
+    "https://django-ecommerce-d0ka.onrender.com",
+]
 
 
 # Application definition
