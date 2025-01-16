@@ -61,21 +61,21 @@ class SignUpForm(UserCreationForm):
         self.fields["username"].widget.attrs["placeholder"] = "User Name"
         self.fields["username"].label = ""
         self.fields["username"].help_text = (
-            '<span class="form-text text-muted"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
+            '<span class="form-text text-muted text-white"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
         )
 
         self.fields["password1"].widget.attrs["class"] = "w-full ps-2"
         self.fields["password1"].widget.attrs["placeholder"] = "Password"
         self.fields["password1"].label = ""
         self.fields["password1"].help_text = (
-            '<ul class="form-text text-muted p-2"><small><li>Your password cant be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password cant be a commonly used password.</li><li>Your password cant be entirely numeric.</li></small></ul>'
+            '<ul class="form-text text-muted p-2 text-white"><small><li>Your password cant be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password cant be a commonly used password.</li><li>Your password cant be entirely numeric.</li></small></ul>'
         )
 
         self.fields["password2"].widget.attrs["class"] = "w-full ps-2"
         self.fields["password2"].widget.attrs["placeholder"] = "Confirm Password"
         self.fields["password2"].label = ""
         self.fields["password2"].help_text = (
-            '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+            '<span class="form-text text-muted text-white"><small>Enter the same password as before, for verification.</small></span>'
         )
 
 
