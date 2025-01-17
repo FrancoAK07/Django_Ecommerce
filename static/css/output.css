@@ -570,16 +570,20 @@ video {
   inset: 0px;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
+.bottom-10 {
+  bottom: 2.5rem;
+}
+
 .end-0 {
   inset-inline-end: 0px;
 }
 
 .left-0 {
   left: 0px;
-}
-
-.left-1\/2 {
-  left: 50%;
 }
 
 .right-0 {
@@ -602,12 +606,16 @@ video {
   top: 1.75rem;
 }
 
-.top-80 {
-  top: 20rem;
-}
-
 .top-full {
   top: 100%;
+}
+
+.left-1\/2 {
+  left: 50%;
+}
+
+.top-1\/2 {
+  top: 50%;
 }
 
 .z-10 {
@@ -789,10 +797,6 @@ video {
 
 .h-full {
   height: 100%;
-}
-
-.min-h-dvh {
-  min-height: 100dvh;
 }
 
 .w-1\/12 {
