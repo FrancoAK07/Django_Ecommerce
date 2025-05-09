@@ -167,7 +167,6 @@
       }
       if (dropdownMobile) {
         dropdownMobile.addEventListener('change', function () {
-          console.log('dropdownMobile')
           const selectedValue = this.value
           if (selectedValue) {
             window.location.href = selectedValue
@@ -176,9 +175,7 @@
       }
       
       window.addEventListener('click', function (e) {
-        console.log(e.target)
         if (!hamburgerBtn.contains(e.target) && e.target != hamburgerBtn && !mobileMenu.contains(e.target) && e.target != mobileMenu) {
-          console.log('entered if')
           mobileMenu.classList.add('hidden')
         }
       
