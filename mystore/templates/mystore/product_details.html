@@ -30,7 +30,6 @@
           action: 'post'
         },
         success: function (json) {
-          console.log(json.qty)
           document.getElementById('cart_qty').textContent = json.qty
           location.reload()
         }

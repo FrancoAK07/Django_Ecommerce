@@ -21,7 +21,6 @@ from payment.models import ShippingAddress
 
 def home(request):
     recent_products = Product.objects.all().order_by("id")[::-1][:3]
-    print(recent_products)
     return render(request, "mystore/index.html", {"recent": recent_products})
 
 
@@ -146,7 +145,6 @@ def update_info(request):
 
 def search_product(request):
     filter_value = request.GET.get("filterValue")
-    print(filter_value)
     if request.method == "POST":
         searched = request.POST["searched"]
         if searched != "":
@@ -164,7 +162,6 @@ def search_product(request):
             return render(request, "mystore/search.html", {})
     else:
         if filter_value == "all departments":
-            print("filter:", filter_value)
             filtered = Product.objects.all()
             return render(
                 request,
